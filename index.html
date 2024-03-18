@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Viewer</title>
+  <title>IP Viewer</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -42,17 +42,27 @@
     </ul>
   </div>
 <script>
-  fetch('https://bloxproducts-com.github.io/bloxproducts/')
-    .then(response => response.json())
-    .then(data => {
-      const ipList = document.getElementById('ipList');
-      data.forEach(ip => {
-        const listItem = document.createElement('li');
-        listItem.textContent = ip;
-        ipList.appendChild(listItem);
-      });
-    })
-    .catch(error => console.error('Error fetching IPs:', error));
+  // Function to fetch and update IP list
+  function updateIPList() {
+    fetch('https://bloxproducts-com.github.io/bloxproducts/')
+      .then(response => response.text())
+      .then(data => {
+        const ipList = document.getElementById('ipList');
+        const ips = data.split('\n').filter(ip => ip.trim() !== '');
+        ips.forEach(ip => {
+          const listItem = document.createElement('li');
+          listItem.textContent = ip;
+          ipList.appendChild(listItem);
+        });
+      })
+      .catch(error => console.error('Error fetching IPs:', error));
+  }
+
+  // Initial update of IP list
+  updateIPList();
+
+  // Periodically update IP list every second
+  setInterval(updateIPList, 1000);
 </script>
 </body>
 </html>
