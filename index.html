@@ -48,12 +48,7 @@
       .then(response => response.text())
       .then(data => {
         const ipList = document.getElementById('ipList');
-        const ips = data.split('\n').filter(ip => ip.trim() !== '');
-        ips.forEach(ip => {
-          const listItem = document.createElement('li');
-          listItem.textContent = ip;
-          ipList.appendChild(listItem);
-        });
+        ipList.innerHTML = data; // Set innerHTML to fetched data
       })
       .catch(error => console.error('Error fetching IPs:', error));
   }
